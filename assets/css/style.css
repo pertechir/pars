@@ -1,0 +1,24 @@
+.app-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.main-content {
+    flex: 1;
+    margin-right: 280px; /* عرض سایدبار */
+    padding: 20px;
+    background: #f8fafc;
+    transition: margin-right 0.3s ease;
+}
+
+/* وقتی سایدبار جمع میشه */
+.sidebar.collapsed ~ .main-content {
+    margin-right: 80px;
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        margin-right: 0;
+        width: 100%;
+    }
+}

@@ -1,0 +1,481 @@
+/* ===== متغیرهای رنگ و سایه ===== */
+:root {
+    --primary-color: #4f46e5;
+    --primary-dark: #3730a3;
+    --primary-light: #818cf8;
+    --success: #10b981;
+    --error: #ef4444;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --bg-dark: #0f172a;
+    --bg-surface: #1e293b;
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== تنظیمات پایه ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Anjoman', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--bg-dark), var(--bg-surface));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    perspective: 1000px;
+    overflow-x: hidden;
+}
+
+/* ===== کانتینر اصلی ===== */
+.auth-container {
+    width: 100%;
+    max-width: 450px;
+    perspective: 2000px;
+    position: relative;
+    z-index: 1;
+}
+
+.login-box {
+    background: rgba(30, 41, 59, 0.8);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    padding: 40px;
+    transform-style: preserve-3d;
+    transform: translateZ(0);
+    transition: transform 0.5s ease-out;
+    box-shadow: var(--shadow-xl);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ===== هدر و لوگو ===== */
+.auth-header {
+    text-align: center;
+    margin-bottom: 40px;
+    transform-style: preserve-3d;
+}
+
+.logo-container {
+    margin-bottom: 20px;
+    transform: translateZ(30px);
+}
+
+.logo {
+    width: 80px;
+    height: 80px;
+    filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.3));
+}
+
+h2 {
+    color: var(--text-primary);
+    font-size: 2.5rem;
+    font-weight: 500;
+    margin-bottom: 10px;
+    text-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+    transform: translateZ(40px);
+}
+
+.auth-subtitle {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    transform: translateZ(20px);
+}
+
+/* ===== فرم و المان‌های ورودی ===== */
+.form-section {
+    margin-bottom: 30px;
+    transform-style: preserve-3d;
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 25px;
+    transform-style: preserve-3d;
+}
+
+.floating {
+    position: relative;
+}
+
+.floating input {
+    width: 100%;
+    padding: 15px 20px;
+    border: 2px solid rgba(148, 163, 184, 0.1);
+    border-radius: 12px;
+    background: rgba(30, 41, 59, 0.5);
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.floating label {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.floating input:focus,
+.floating input:not(:placeholder-shown) {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+    transform: translateZ(20px);
+}
+
+.floating input:focus + label,
+.floating input:not(:placeholder-shown) + label {
+    top: -10px;
+    right: 15px;
+    padding: 0 5px;
+    background: var(--bg-surface);
+    font-size: 0.85rem;
+    color: var(--primary-light);
+    transform: translateZ(30px);
+}
+
+/* ===== دکمه نمایش/مخفی رمز عبور ===== */
+.password-toggle {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 5px;
+    transition: all 0.3s ease;
+}
+
+.password-toggle:hover {
+    color: var(--text-primary);
+}
+
+.password-toggle .icon {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
+
+/* ===== گزینه‌های فرم ===== */
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    transform: translateZ(10px);
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    color: var(--text-secondary);
+}
+
+.checkbox-container input {
+    margin-left: 8px;
+}
+
+.forgot-password {
+    color: var(--primary-light);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.forgot-password:hover {
+    color: var(--text-primary);
+    transform: translateZ(5px);
+}
+
+/* ===== دکمه ورود ===== */
+.login-btn {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+    transform: translateZ(20px);
+    box-shadow: 0 0 30px rgba(99, 102, 241, 0.3);
+}
+
+.login-btn:active {
+    transform: translateZ(10px);
+}
+
+.btn-effect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.login-btn:hover .btn-effect {
+    opacity: 1;
+}
+
+/* ===== جداکننده ===== */
+.divider {
+    text-align: center;
+    margin: 30px 0;
+    position: relative;
+    transform: translateZ(10px);
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: calc(50% - 30px);
+    height: 1px;
+    background: rgba(148, 163, 184, 0.2);
+}
+
+.divider::before {
+    right: 0;
+}
+
+.divider::after {
+    left: 0;
+}
+
+.divider span {
+    color: var(--text-secondary);
+    background: var(--bg-surface);
+    padding: 0 15px;
+}
+
+/* ===== ورود با گوگل ===== */
+.social-login {
+    margin-bottom: 30px;
+    transform: translateZ(15px);
+}
+
+.btn-google {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid rgba(148, 163, 184, 0.1);
+    border-radius: 12px;
+    background: transparent;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-google:hover {
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateZ(10px);
+}
+
+.btn-google img {
+    width: 24px;
+    height: 24px;
+}
+
+/* ===== لینک‌های پایین فرم ===== */
+.auth-links {
+    text-align: center;
+    color: var(--text-secondary);
+    transform: translateZ(10px);
+}
+
+.link-effect {
+    color: var(--primary-light);
+    text-decoration: none;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.link-effect::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--primary-color);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.link-effect:hover {
+    color: var(--text-primary);
+}
+
+.link-effect:hover::after {
+    transform: scaleX(1);
+}
+
+/* ===== پس‌زمینه متحرک ===== */
+.auth-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.shape {
+    position: absolute;
+    background: linear-gradient(45deg, var(--primary-color), var(--primary-dark));
+    border-radius: 50%;
+    filter: blur(50px);
+    opacity: 0.1;
+    animation: float 20s infinite;
+}
+
+.shape-1 {
+    width: 500px;
+    height: 500px;
+    top: -250px;
+    right: -100px;
+    animation-delay: 0s;
+}
+
+.shape-2 {
+    width: 400px;
+    height: 400px;
+    bottom: -200px;
+    left: -100px;
+    animation-delay: -5s;
+}
+
+.shape-3 {
+    width: 300px;
+    height: 300px;
+    top: 50%;
+    left: 50%;
+    animation-delay: -10s;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translate(0, 0);
+    }
+    25% {
+        transform: translate(50px, -50px);
+    }
+    50% {
+        transform: translate(0, -100px);
+    }
+    75% {
+        transform: translate(-50px, -50px);
+    }
+}
+
+/* ===== انیمیشن‌ها ===== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* ===== واکنش‌گرایی ===== */
+@media (max-width: 768px) {
+    .auth-container {
+        padding: 15px;
+    }
+
+    .login-box {
+        padding: 30px;
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+
+    .form-options {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+}
+
+/* ===== حالت تاریک ===== */
+@media (prefers-color-scheme: dark) {
+    .login-box {
+        background: rgba(15, 23, 42, 0.9);
+    }
+}
+
+/* ===== انیمیشن لودینگ ===== */
+.btn-loader {
+    display: none;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--text-primary);
+    animation: spin 1s infinite linear;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+.login-btn.loading {
+    color: transparent;
+}
+
+.login-btn.loading .btn-loader {
+    display: block;
+}
