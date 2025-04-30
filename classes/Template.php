@@ -24,13 +24,12 @@ class Template {
     }
     
     public function render() {
-        ob_start();
-        include BASE_PATH . '/includes/header.php';
-        include BASE_PATH . '/includes/sidebar.php';
+        require_once BASE_PATH . '/includes/header.php';
+        $sidebar = new Sidebar();
+        $sidebar->render();
         echo '<div class="main-content">';
         echo $this->content;
         echo '</div>';
-        include BASE_PATH . '/includes/footer.php';
-        return ob_get_clean();
+        require_once BASE_PATH . '/includes/footer.php';
     }
 }

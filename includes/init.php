@@ -1,6 +1,7 @@
 <?php
 session_start();
 define('BASE_PATH', dirname(__DIR__));
+define('BASE_URL', '/pars');
 
 // تنظیمات منطقه زمانی
 date_default_timezone_set('Asia/Tehran');

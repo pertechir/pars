@@ -1,4 +1,20 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Anjoman', sans-serif;
+    background: #f8fafc;
+    direction: rtl;
+}
+
 .app-container {
+    min-height: 100vh;
+}
+
+.app-wrapper {
     display: flex;
     min-height: 100vh;
 }
@@ -7,7 +23,6 @@
     flex: 1;
     margin-right: 280px; /* عرض سایدبار */
     padding: 20px;
-    background: #f8fafc;
     transition: margin-right 0.3s ease;
 }
 
@@ -16,9 +31,24 @@
     margin-right: 80px;
 }
 
+/* واکنش‌گرایی */
 @media (max-width: 768px) {
     .main-content {
         margin-right: 0;
         width: 100%;
     }
+}
+
+/* استایل‌های عمومی */
+h1 {
+    font-size: 1.8rem;
+    color: #1e293b;
+    margin-bottom: 1.5rem;
+}
+
+.dashboard-container {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
