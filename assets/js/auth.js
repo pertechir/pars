@@ -1,270 +1,89 @@
-document.addEventListener('DOMContentLoaded', () => {
-    class ThreeDEffect {
-        constructor() {
-            this.container = document.querySelector('.auth-container');
-            this.box = document.querySelector('.auth-box');
-            this.title = document.querySelector('h2');
-            this.inputs = document.querySelectorAll('.floating input');
-            this.button = document.querySelector('.btn-primary');
-            this.mouseMoveActive = true;
-            
+class ThreeDEffect {
+    constructor() {
+        // فقط در صفحات auth اجرا شود
+        if (this.isAuthPage()) {
             this.init();
         }
+    }
 
-        init() {
+    isAuthPage() {
+        return window.location.pathname.includes('auth') || 
+               window.location.pathname.includes('login.php') || 
+               window.location.pathname.includes('register.php');
+    }
+
+    init() {
+        this.container = document.querySelector('.auth-container');
+        this.card = document.querySelector('.auth-card');
+
+        if (this.container && this.card) {
             this.initializeFloatingEffects();
             this.initializeMouseMove();
-            this.initializeInputEffects();
-            this.initializeButtonEffects();
-            this.initializeParallax();
-            this.initializeEntryAnimation();
         }
+    }
 
-        initializeFloatingEffects() {
-            const animate = (element, delay = 0) => {
-                gsap.to(element, {
-                    duration: 2,
-                    y: -10,
-                    z: 20,
-                    delay,
-                    yoyo: true,
-                    repeat: -1,
-                    ease: "power1.inOut"
-                });
-            };
-
-            animate(this.title, 0);
-            this.inputs.forEach((input, index) => animate(input.parentElement, index * 0.2));
-            animate(this.button, this.inputs.length * 0.2);
-        }
-
-        initializeMouseMove() {
-            let rect = this.container.getBoundingClientRect();
-            let mouseX = 0;
-            let mouseY = 0;
-            let centerX = rect.left + rect.width / 2;
-            let centerY = rect.top + rect.height / 2;
-
-            document.addEventListener('mousemove', (e) => {
-                if (!this.mouseMoveActive) return;
-
-                mouseX = e.clientX - centerX;
-                mouseY = e.clientY - centerY;
-
-                const rotateX = (mouseY / centerY) * 10;
-                const rotateY = (mouseX / centerX) * 10;
-
-                gsap.to(this.box, {
-                    duration: 0.5,
-                    rotateX: -rotateX,
-                    rotateY: rotateY,
-                    ease: "power2.out"
-                });
-            });
-
-            this.container.addEventListener('mouseleave', () => {
-                gsap.to(this.box, {
-                    duration: 1,
-                    rotateX: 0,
-                    rotateY: 0,
-                    ease: "elastic.out(1, 0.5)"
-                });
-            });
-        }
-
-        initializeInputEffects() {
-            this.inputs.forEach(input => {
-                input.addEventListener('focus', () => {
-                    this.mouseMoveActive = false;
-                    const parent = input.parentElement;
-                    
-                    gsap.to(parent, {
-                        duration: 0.3,
-                        z: 50,
-                        scale: 1.05,
-                        ease: "power2.out"
-                    });
-
-                    gsap.to(input, {
-                        duration: 0.3,
-                        boxShadow: "0 15px 30px rgba(99, 102, 241, 0.2)",
-                        ease: "power2.out"
-                    });
-                });
-
-                input.addEventListener('blur', () => {
-                    this.mouseMoveActive = true;
-                    const parent = input.parentElement;
-                    
-                    gsap.to(parent, {
-                        duration: 0.3,
-                        z: 0,
-                        scale: 1,
-                        ease: "power2.in"
-                    });
-
-                    gsap.to(input, {
-                        duration: 0.3,
-                        boxShadow: "none",
-                        ease: "power2.in"
-                    });
-                });
-            });
-        }
-
-        initializeButtonEffects() {
-            this.button.addEventListener('mouseenter', () => {
-                gsap.to(this.button, {
-                    duration: 0.3,
-                    z: 50,
-                    scale: 1.05,
-                    ease: "power2.out"
-                });
-            });
-
-            this.button.addEventListener('mouseleave', () => {
-                gsap.to(this.button, {
-                    duration: 0.3,
-                    z: 0,
-                    scale: 1,
-                    ease: "power2.in"
-                });
-            });
-
-            this.button.addEventListener('click', (e) => {
-                if (!this.button.classList.contains('loading')) {
-                    e.preventDefault();
-                    this.button.classList.add('loading');
-
-                    gsap.to(this.button, {
-                        duration: 0.1,
-                        scale: 0.95,
-                        ease: "power2.in",
-                        onComplete: () => {
-                            gsap.to(this.button, {
-                                duration: 0.1,
-                                scale: 1,
-                                ease: "power2.out"
-                            });
-                        }
-                    });
-
-                    // Simulating form validation
-                    this.validateForm().then(isValid => {
-                        if (isValid) {
-                            this.submitForm();
-                        } else {
-                            this.showError();
-                        }
-                    });
-                }
-            });
-        }
-
-        initializeParallax() {
-            const parallaxElements = document.querySelectorAll('[data-parallax]');
-            
-            document.addEventListener('mousemove', (e) => {
-                const centerX = window.innerWidth / 2;
-                const centerY = window.innerHeight / 2;
-                const moveX = (e.clientX - centerX) / 50;
-                const moveY = (e.clientY - centerY) / 50;
-
-                parallaxElements.forEach(element => {
-                    const speed = element.getAttribute('data-parallax');
-                    const x = moveX * speed;
-                    const y = moveY * speed;
-
-                    gsap.to(element, {
-                        duration: 0.5,
-                        x,
-                        y,
-                        ease: "power2.out"
-                    });
-                });
-            });
-        }
-
-        initializeEntryAnimation() {
-            gsap.from(this.box, {
-                duration: 1,
-                y: 100,
-                opacity: 0,
-                rotateX: 20,
-                ease: "power4.out"
-            });
-
-            gsap.from(this.inputs, {
-                duration: 0.8,
-                y: 50,
-                opacity: 0,
-                stagger: 0.1,
-                delay: 0.5,
-                ease: "power3.out"
-            });
-
-            gsap.from(this.button, {
-                duration: 0.8,
-                y: 50,
-                opacity: 0,
-                delay: 0.8,
-                ease: "power3.out"
-            });
-        }
-
-        async validateForm() {
-            const inputs = Array.from(this.inputs);
-            let isValid = true;
-
-            for (let input of inputs) {
-                if (!input.value) {
-                    this.shakeElement(input);
-                    isValid = false;
-                }
-            }
-
-            return isValid;
-        }
-
-        shakeElement(element) {
+    animate(element, options) {
+        if (element && window.gsap) {
             gsap.to(element, {
-                duration: 0.1,
-                x: 10,
-                yoyo: true,
-                repeat: 3,
-                ease: "power2.inOut"
-            });
-        }
-
-        async submitForm() {
-            // Add your form submission logic here
-            setTimeout(() => {
-                this.button.classList.remove('loading');
-                document.querySelector('form').submit();
-            }, 1000);
-        }
-
-        showError() {
-            this.button.classList.remove('loading');
-            gsap.to(this.button, {
-                duration: 0.2,
-                backgroundColor: "#ef4444",
-                ease: "power2.in",
-                onComplete: () => {
-                    setTimeout(() => {
-                        gsap.to(this.button, {
-                            duration: 0.2,
-                            backgroundColor: "#6366f1",
-                            ease: "power2.out"
-                        });
-                    }, 1000);
-                }
+                duration: 0.3,
+                ...options
             });
         }
     }
 
-    // Initialize effects
-    new ThreeDEffect();
+    initializeFloatingEffects() {
+        if (this.card && window.gsap) {
+            gsap.to(this.card, {
+                y: 15,
+                duration: 2,
+                repeat: -1,
+                yoyo: true,
+                ease: "power1.inOut"
+            });
+        }
+    }
+
+    initializeMouseMove() {
+        if (!this.container || !this.card) return;
+
+        this.container.addEventListener('mousemove', (e) => {
+            const rect = this.container.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const moveX = (mouseX - centerX) / 25;
+            const moveY = (mouseY - centerY) / 25;
+
+            this.animate(this.card, {
+                rotateY: moveX,
+                rotateX: -moveY,
+                transformPerspective: 1000,
+                ease: "power2.out"
+            });
+        });
+
+        this.container.addEventListener('mouseleave', () => {
+            this.animate(this.card, {
+                rotateY: 0,
+                rotateX: 0,
+                transformPerspective: 1000,
+                ease: "power2.out"
+            });
+        });
+    }
+}
+
+// اجرای کلاس فقط در صورتی که در صفحه auth باشیم
+document.addEventListener('DOMContentLoaded', () => {
+    const currentPath = window.location.pathname;
+    if (currentPath.includes('auth') || 
+        currentPath.includes('login.php') || 
+        currentPath.includes('register.php')) {
+        new ThreeDEffect();
+    }
 });
 
 // Additional utility functions
