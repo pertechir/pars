@@ -1,4 +1,5 @@
 <?php
+
 class Template {
     private static $instance = null;
     private $title = 'سیستم حسابداری';
@@ -24,12 +25,20 @@ class Template {
     }
     
     public function render() {
+        ob_start();
         require_once BASE_PATH . '/includes/header.php';
+        
+        // اضافه کردن کانتینر سایدبار
+        echo '<div class="app-wrapper">';
         $sidebar = new Sidebar();
         $sidebar->render();
+        
         echo '<div class="main-content">';
         echo $this->content;
-        echo '</div>';
+        echo '</div>'; // پایان main-content
+        echo '</div>'; // پایان app-wrapper
+        
         require_once BASE_PATH . '/includes/footer.php';
+        return ob_get_clean();
     }
 }

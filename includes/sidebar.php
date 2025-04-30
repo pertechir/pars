@@ -644,6 +644,7 @@ class Sidebar {
                                 const otherArrow = otherLink.querySelector('.submenu-arrow');
                                 otherSubmenu.style.maxHeight = null;
                                 otherArrow.style.transform = '';
+                                }
                                                     });
 
                         // Toggle current submenu

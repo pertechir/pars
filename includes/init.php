@@ -6,6 +6,10 @@ define('BASE_URL', '/pars');
 // تنظیمات منطقه زمانی
 date_default_timezone_set('Asia/Tehran');
 
+// لود کردن کلاس‌های مورد نیاز
+require_once BASE_PATH . '/classes/Database.php';
+require_once BASE_PATH . '/includes/sidebar.php';
+
 // فانکشن اتولود برای کلاس‌ها
 spl_autoload_register(function ($class) {
     $class_path = BASE_PATH . '/classes/' . $class . '.php';
@@ -17,7 +21,7 @@ spl_autoload_register(function ($class) {
 // چک کردن لاگین کاربر
 function checkAuth() {
     if (!isset($_SESSION['user_id'])) {
-        header('Location: /auth/login.php');
+        header('Location: ' . BASE_URL . '/auth/login.php');
         exit;
     }
 }
